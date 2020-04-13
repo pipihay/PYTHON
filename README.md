@@ -1,2 +1,2 @@
 # PYTHON
-download PIL and argparse first
+ # for picture to character :download PIL and argparse first
