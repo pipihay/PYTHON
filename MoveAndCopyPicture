@@ -1,0 +1,62 @@
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+this code is Frome yingyingyu
+use for change picture from local to local
+,picture name we get from a docx table
+
+"""
+
+
+import os
+import shutil
+import docx
+
+
+"""
+
+rd"""
+doc_list  = docx.Document('XXX.docx')  # file where include the name
+table = doc_list.tables
+table0 = table[0]
+cols = table0.columns[1]
+cols_cell = [cell.text for cell in cols.cells]
+
+pictureDic = {}
+new_cols = cols_cell[:-1][1:]
+path_Dic = {}
+for i in new_cols:
+    n_i = i.split('/')[1:]
+    count = 0
+    path_list = ''
+    for  g in n_i:
+        count += 1
+        path_list += '\\' + g
+        if count == len(n_i) - 1:
+            pictureDic[n_i[-1]] = path_list
+            path_Dic[path_list] =[]
+            
+for key, value in pictureDic.items():
+    for i in path_Dic.keys():
+        if i == value:
+            path_Dic[i].append(key)                                              
+
+keys = path_Dic.keys()
+
+for key_path in keys:
+    start_directory = 'C:\\test'
+    a = os.listdir(start_directory)
+    second_directory = 'E:\\new_text' +key_path
+    b = os.listdir(second_directory)
+    print(key_path, len(path_Dic[key_path]))
+ 
+    for i in a:
+        for h in b:
+            if i == h:
+                new = os.path.join(start_directory, i)
+                old = os.path.join(second_directory, h)
+                shutil.copy(new, old)
+            else:
+              continue
+    
